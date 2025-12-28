@@ -27,7 +27,7 @@ from views import api_bp
 app = Flask(__name__)
 
 if not firebase_admin._apps:
-    firebase_admin.initialize_app(cred)
+    firebase_admin.initialize_app()
 
 app.register_blueprint(api_bp)
 
