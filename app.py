@@ -20,19 +20,16 @@ from flask import Flask
 
 from utils.logging import logger
 
+import firebase_admin
+
+from views import api_bp
+
 app = Flask(__name__)
 
+if not firebase_admin._apps:
+    firebase_admin.initialize_app(cred)
 
-@app.route("/")
-def hello() -> str:
-    # Use basic logging with custom fields
-    logger.info(logField="custom-entry", arbitraryField="custom-entry")
-
-    # https://cloud.google.com/run/docs/logging#correlate-logs
-    logger.info("Child logger with trace Id.")
-
-    return "Hello, World!"
-
+app.register_blueprint(api_bp)
 
 def shutdown_handler(signal_int: int, frame: FrameType) -> None:
     logger.info(f"Caught Signal {signal.strsignal(signal_int)}")
