@@ -14,5 +14,5 @@ def predict_route():
         return jsonify({"error": "`url` parameter is required"}), 400
 
     input_text = get_newsletter_text(url)
-    prediction = predict(input_text)
-    return jsonify({"prediction": prediction.name}), 200
+    prediction, confidence = predict(input_text)
+    return jsonify({"prediction": prediction.name, "confidence": confidence}), 200
