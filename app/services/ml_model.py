@@ -17,7 +17,12 @@ def get_newsletter_text(url: str) -> str:
     return article.text
 
 def predict(text: str) -> ModelPrediction:
-    inputs = tokenizer(text[:512], return_tensors="pt")
+    inputs = tokenizer(
+        text,
+        return_tensors="pt",
+        max_length=512,
+        truncation=True,
+    )
 
     with torch.no_grad():
         logits = model(**inputs).logits
