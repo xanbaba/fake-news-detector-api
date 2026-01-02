@@ -1,3 +1,4 @@
+newspaper3k
 torch
 transformers
 Flask==3.0.1
