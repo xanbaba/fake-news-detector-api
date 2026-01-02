@@ -1,11 +1,13 @@
 from flask import Blueprint, jsonify, request
 from app.services.ml_model import get_newsletter_text, predict
+from app.auth import firebase_auth_required
 
 # Define the blueprint
 # 'api' is the internal name Flask uses
 api_bp = Blueprint('api', __name__, url_prefix='/api')
 
 @api_bp.route('/predict', methods=['GET'])
+@firebase_auth_required
 def predict_route():
     url = request.args.get("url", default='', type=str)
     if not url:
