@@ -1,3 +1,5 @@
+torch
+transformers
 Flask==3.0.1
 gunicorn==23.0.0
 

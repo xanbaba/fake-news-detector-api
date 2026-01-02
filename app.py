@@ -22,7 +22,7 @@ from utils.logging import logger
 
 import firebase_admin
 
-from views import api_bp
+from app.views import api_bp
 
 app = Flask(__name__)
 
