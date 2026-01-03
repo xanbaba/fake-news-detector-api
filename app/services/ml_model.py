@@ -16,7 +16,7 @@ def get_newsletter_text(url: str) -> str:
     article.parse()
     return article.text
 
-def predict(text: str) -> ModelPrediction:
+def predict(text: str) -> tuple[ModelPrediction, float]:
     inputs = tokenizer(
         text,
         return_tensors="pt",
@@ -27,6 +27,14 @@ def predict(text: str) -> ModelPrediction:
     with torch.no_grad():
         logits = model(**inputs).logits
 
-    predicted_class_id = logits.argmax().item()
+    # 1. Apply softmax to convert logits to probabilities
+    probs = torch.softmax(logits, dim=-1)
 
-    return ModelPrediction(predicted_class_id)
+    # 2. Get the highest probability as the confidence score
+    confidence = probs.max().item()
+
+    # 3. Get the predicted class
+    predicted_class_id = logits.argmax().item()
+    prediction = ModelPrediction(predicted_class_id)
+
+    return prediction, confidence
